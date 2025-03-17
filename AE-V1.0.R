@@ -37,19 +37,11 @@ library(excel.link)
 library(table1)
 library(ggpubr)
 library(gtools)
-####generating AE example data using ACE Trial
-d <- odbcConnectAccess2007("N:\\SNAPSHOTS\\DDU-FRAME\\Live Snapshot 20240503\\FRAME_LIVE_20240503.accdb")
-#AE = sqlFetch(d,"dbo_R_FRAME_AdvRQG_aeRQG")
-AE = sqlFetch(d,"dbo_R_FRAME_AdvRQG_aeRQG")
 
 AE$z_usubjid = toupper(AE$z_usubjid)
 
 AE = AE[!is.na(AE$z_usubjid) | !is.na(AE$rqaedet),]
 
-AE_med = read.csv("N:\\ANALYSES\\FRAME\\SAR\\Phase I\\Data\\CSVexport_FRAME_AllSites 03May2024.csv")
-#AE_med=read.csv("N:\\ANALYSES\\ACE\\SAR\\Phase l\\November 2022\\Manuscript\\Data\\Clinical Coding 06Feb2023\\ACE p1 Clinical Coding CSV export.csv")
-AE_med$Subject.Label = toupper(AE_med$Subject.Label)
-AE_med =AE_med[AE_med$ResponseValue!='',]
 
 AE_med = AE_med[AE_med$eFormCode == "AdvRQG",c("Subject.Label","ResponseValue","eFormCycle", "QuestionCycle","System.Organ.Class","Preferred.Term")]
 
