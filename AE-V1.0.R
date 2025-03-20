@@ -1,8 +1,42 @@
-#New branch version to compare against other in GitHub
-
 ####purpose/input parameters and what they control/
 #AEdata:
 #explain the arguments in the function
+TODO:
+#MQ is testing code on 19th March 2025
+#install.packages("bookdown")
+#install.packages("RODBC")
+#install.packages("tidyverse")
+#install.packages("dplyr")
+#install.packages("data.table")
+#install.packages("knitr")
+#install.packages("lubridate")
+#install.packages("kableExtra")
+#install.packages("desctable")
+#install.packages("flextable")
+#install.packages("sur")
+#install.packages("stringr")
+#install.packages("readstata13")
+#install.packages("survival") 
+#install.packages("ggplot2")
+#install.packages("ggfortify")
+#install.packages("survminer")
+#install.packages("anytime")
+#install.packages("PropCIs")
+#install.packages("reshape2")
+#install.packages("zoo")
+#install.packages("magrittr")
+#install.packages("ggbreak")
+#install.packages("patchwork")
+#install.packages("gtsummary")
+#install.packages("ftExtra")
+#install.packages("officer")
+#install.packages("officedown")
+#install.packages("pandoc")
+#install.packages("berryFunctions")
+#install.packages("excel.link")
+#install.packages("table1")
+#install.packages("ggpubr")
+#install.packages("gtools")
 library(bookdown)
 library(RODBC)
 library(tidyverse)
@@ -37,11 +71,21 @@ library(excel.link)
 library(table1)
 library(ggpubr)
 library(gtools)
+####generating AE example data using ACE Trial
+FIXME:
+# MQ no access to data
+d <- odbcConnectAccess2007("N:\\SNAPSHOTS\\DDU-FRAME\\Live Snapshot 20240503\\FRAME_LIVE_20240503.accdb")
+#AE = sqlFetch(d,"dbo_R_FRAME_AdvRQG_aeRQG")
+AE = sqlFetch(d,"dbo_R_FRAME_AdvRQG_aeRQG")
 
 AE$z_usubjid = toupper(AE$z_usubjid)
 
 AE = AE[!is.na(AE$z_usubjid) | !is.na(AE$rqaedet),]
 
+AE_med = read.csv("N:\\ANALYSES\\FRAME\\SAR\\Phase I\\Data\\CSVexport_FRAME_AllSites 03May2024.csv")
+#AE_med=read.csv("N:\\ANALYSES\\ACE\\SAR\\Phase l\\November 2022\\Manuscript\\Data\\Clinical Coding 06Feb2023\\ACE p1 Clinical Coding CSV export.csv")
+AE_med$Subject.Label = toupper(AE_med$Subject.Label)
+AE_med =AE_med[AE_med$ResponseValue!='',]
 
 AE_med = AE_med[AE_med$eFormCode == "AdvRQG",c("Subject.Label","ResponseValue","eFormCycle", "QuestionCycle","System.Organ.Class","Preferred.Term")]
 
